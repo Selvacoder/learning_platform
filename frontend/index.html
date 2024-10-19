@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Platform</title>
+    <link rel="stylesheet" href="style.css"> <!-- General styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add any inline CSS here */
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <button class="profile-toggle" onclick="toggleProfile()">
+                <i class="fas fa-user"></i>
+            </button>
+            <a href="#" class="navbar-brand">Learning Platform</a>
+            <div class="navbar-search">
+                <input type="text" id="search-bar" placeholder="Search..." oninput="searchCourses()">
+                <button>Search</button>
+            </div>
+            <div class="navbar-links" id="navbar-links"></div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="content-container">
+            <h1>Welcome to the Learning Platform</h1>
+            <p>Your journey to knowledge starts here. Explore a wide range of courses and resources.</p>
+
+            <!-- Featured Courses Section -->
+            <div class="course-section">
+                <h2>Featured Courses</h2>
+                <div class="course-grid">
+                    <div class="course-card" id="course-1">
+                        <div class="course-info">
+                            <h3>Web Development</h3>
+                            <p>Learn the basics of web development with HTML, CSS, and JavaScript.</p>
+                            <button class="enroll-btn" data-course="Web Development">Enroll Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card" id="course-2">
+                        <div class="course-info">
+                            <h3>Data Science</h3>
+                            <p>Master the skills needed for data analysis and visualization.</p>
+                            <button class="enroll-btn" data-course="Data Science">Enroll Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card" id="course-3">
+                        <div class="course-info">
+                            <h3>Machine Learning</h3>
+                            <p>Explore the world of machine learning and artificial intelligence.</p>
+                            <button class="enroll-btn" data-course="Machine Learning">Enroll Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card" id="course-4">
+                        <div class="course-info">
+                            <h3>Graphic Design</h3>
+                            <p>Unleash your creativity with graphic design techniques.</p>
+                            <button class="enroll-btn" data-course="Graphic Design">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar-container"></div>
+    </div>
+
+    <!-- Enrollment Modal -->
+    <div id="enrollment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <h2>Confirm Enrollment</h2>
+            <p id="course-name"></p>
+            <button id="confirm-enroll">Confirm Enrollment</button>
+        </div>
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast" id="toast">Enrolled successfully!</div>
+
+    <!-- JavaScript to handle sidebar, login/logout, and course enrollment -->
+    <script>
+        // Load sidebar HTML dynamically (if you have one)
+        async function loadHTML(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Error loading ${url}: ${response.statusText}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        loadHTML('sidebar.html', 'sidebar-container');
+
+        function toggleProfile() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Login/Logout functionality
+        const isLoggedIn = localStorage.getItem('loggedIn');
+        const navbarLinks = document.getElementById('navbar-links');
+        if (isLoggedIn) {
+            navbarLinks.innerHTML = `
+                <a href="#" id="logout-link">Logout</a>
+            `;
+        } else {
+            navbarLinks.innerHTML = `
+                <a href="login.html">Login</a>
+                <a href="signup.html">Sign Up</a>
+            `;
+        }
+
+        document.getElementById('logout-link')?.addEventListener('click', function () {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            window.location.reload();
+        });
+
+        // Enroll button click handler
+        document.querySelectorAll('.enroll-btn').forEach((button) => {
+            button.addEventListener('click', function () {
+                const courseName = button.getAttribute('data-course');
+                const isLoggedIn = localStorage.getItem('loggedIn');
+
+                if (!isLoggedIn) {
+                    alert('Please log in to enroll in a course.');
+                    window.location.href = 'login.html'; // Redirect to login page
+                    return;
+                }
+
+                // Show the enrollment modal
+                document.getElementById('course-name').innerText = courseName;
+                document.getElementById('enrollment-modal').style.display = 'block';
+            });
+        });
+
+        // Confirm enrollment in the modal
+        document.getElementById('confirm-enroll').addEventListener('click', async function () {
+            const courseName = document.getElementById('course-name').innerText;
+            const username = localStorage.getItem('username');
+            const email = localStorage.getItem('email');
+
+            // Check if username or email are missing
+            if (!username || !email) {
+                alert('User data is missing. Please log in again.');
+                return;
+            }
+
+            closeModal();  // Close the modal
+
+            try {
+                const response = await fetch('http://localhost:5000/api/enrollment/enroll', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, email, courseName }),
+                });
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || 'Enrollment failed');
+                }
+
+                const data = await response.json();
+                showToast('Enrolled successfully!');
+            } catch (error) {
+                console.error('Enrollment failed:', error);
+                showToast(`Error: ${error.message}`);
+            }
+        });
+
+        // Close the modal
+        function closeModal() {
+            document.getElementById('enrollment-modal').style.display = 'none';
+        }
+
+        // Toast message logic
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+    <script src="filter.js"></script>
+</body>
+</html>

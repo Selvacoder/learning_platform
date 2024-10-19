@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Learning Platform</title>
+    <link rel="stylesheet" href="style.css"> <!-- General styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">Learning Platform</a>
+            <div class="navbar-links">
+                <a href="login.html">Login</a>
+                <a href="signup.html">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="signup-container">
+        <h2>Create an Account</h2>
+        <form id="signup-form">
+            <div class="input-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" placeholder="Enter your full name" required />
+            </div>
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required />
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Create a password" required />
+                <span id="password-error" class="error-message"></span> <!-- Error message span for password -->
+            </div>
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" placeholder="Confirm your password" required />
+                <span id="confirm-password-error" class="error-message"></span> <!-- Error message span for confirm password -->
+            </div>
+            <button type="submit">Sign Up</button>
+            <div class="extra-links">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Password validation regex patterns
+        const passwordPattern = {
+            length: /.{8,}/, // At least 8 characters
+            uppercase: /[A-Z]/, // At least one uppercase letter
+            number: /\d/, // At least one number
+            specialChar: /[!@#$%^&*(),.?":{}|<>]/ // At least one special character
+        };
+
+        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const passwordError = document.getElementById('password-error');
+            const confirmPasswordError = document.getElementById('confirm-password-error');
+
+            // Reset error messages
+            passwordError.textContent = '';
+            confirmPasswordError.textContent = '';
+
+            // Validate password
+            let isValidPassword = true;
+
+            if (!passwordPattern.length.test(password)) {
+                passwordError.innerHTML += 'Password must be at least 8 characters long.<br>';
+                isValidPassword = false;
+            }
+            if (!passwordPattern.uppercase.test(password)) {
+                passwordError.innerHTML += 'Password must contain at least one uppercase letter.<br>';
+                isValidPassword = false;
+            }
+            if (!passwordPattern.number.test(password)) {
+                passwordError.innerHTML += 'Password must contain at least one number.<br>';
+                isValidPassword = false;
+            }
+            if (!passwordPattern.specialChar.test(password)) {
+                passwordError.innerHTML += 'Password must contain at least one special character.<br>';
+                isValidPassword = false;
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match!";
+                return;
+            }
+
+            // If password is not valid, stop form submission
+            if (!isValidPassword) {
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    window.location.href = 'login.html'; // Redirect to login page
+                } else {
+                    alert('Signup failed: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Signup failed due to server error.');
+            }
+        });
+    </script>
+</body>
+</html>

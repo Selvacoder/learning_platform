@@ -1,0 +1,22 @@
+{
+  "name": "learnig-paltform",
+  "version": "1.0.0",
+  "main": "server.js",
+  "proxy": "http://localhost:5000",
+
+ "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mongoose": "^5.13.22"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+  
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css"> <!-- Update path accordingly -->
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">Learning Platform</a>
+            <div class="navbar-links">
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-info">
+                <h1 id="profileName">John Doe</h1>
+                <p>Email: <span id="profileEmail">john.doe@example.com</span></p>
+            </div>
+        </div>
+
+        <!-- Courses Enrolled Section -->
+        <div class="profile-courses">
+            <h2>My Courses</h2>
+            <ul id="coursesList">
+                <!-- Courses will be dynamically loaded here -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Assuming user data is stored in localStorage as 'username' and 'email'
+            const username = localStorage.getItem("username");
+            const email = localStorage.getItem("email");
+    
+            // Update the profile page with the username and email
+            if (username && email) {
+                document.getElementById("profileName").textContent = username;
+                document.getElementById("profileEmail").textContent = email;
+            } else {
+                alert("No user information found. Please log in.");
+                // Redirect to login page if no user info
+                window.location.href = "login.html";
+            }
+    
+            // Fetch courses from the backend using the stored email
+            await fetchCourses(email);
+        });
+    
+        async function fetchCourses(email) {
+            try {
+                console.log(`Fetching courses for email: ${email}`);
+    
+                const response = await fetch(`http://127.0.0.1:5000/api/courses?email=${email}`);
+                console.log('Response received:', response);
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const courses = await response.json();  // Parse response as JSON
+                console.log('Courses fetched:', courses);
+    
+                const coursesList = document.getElementById("coursesList");
+    
+                // Clear existing course list before appending
+                coursesList.innerHTML = '';
+    
+                if (Array.isArray(courses) && courses.length > 0) {
+                    // Loop through the courses and create a list item for each
+                    courses.forEach(course => {
+                        console.log('Course:', course);  // Debug individual course
+                        const listItem = document.createElement("li");
+                        listItem.textContent = course.courseName;  // Access the correct property
+                        coursesList.appendChild(listItem);
+                    });
+                } else {
+                    // If no courses found, show a message
+                    const noCourses = document.createElement("li");
+                    noCourses.textContent = "You haven't enrolled in any courses yet.";
+                    coursesList.appendChild(noCourses);
+                }
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+                const coursesList = document.getElementById("coursesList");
+                const errorMessage = document.createElement("li");
+                errorMessage.textContent = `An error occurred: ${error.message}`;
+                coursesList.appendChild(errorMessage);
+            }
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,159 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #e0f7fa, #ffffff); /* Gradient background for a modern look */
+    color: #333;
+    line-height: 1.6; /* Improved readability */
+}
+
+.navbar {
+    background-color: #283593; /* Dark blue navbar for a professional touch */
+    color: white;
+    padding: 1em 2em;
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    border-bottom: 2px solid #ff5722; /* Accent border for visual separation */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.8em; /* Larger brand text */
+    color: #ff5722; /* Brand color */
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: text-decoration 0.2s; /* Smooth underline transition */
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+/* Profile Styles */
+.profile-container {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin-bottom: 2em;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-info h1 {
+    margin: 0 0 1em 0;
+    color: #283593;
+}
+
+.profile-info p {
+    margin: 0.5em 0;
+}
+
+.profile-bio {
+    margin-bottom: 2em;
+}
+
+.profile-bio h2 {
+    font-size: 1.6em;
+    color: #283593;
+}
+
+.profile-bio p {
+    font-size: 1.1em;
+}
+
+.profile-courses h2 {
+    font-size: 1.6em;
+    color: #283593;
+}
+
+.profile-courses ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-courses ul li {
+    padding: 10px 0;
+}
+
+.profile-courses a {
+    color: #ff5722;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.profile-courses a:hover {
+    color: #e64a19;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.edit-profile-btn, .logout-btn {
+    padding: 0.5em 1.5em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-profile-btn {
+    background-color: #283593;
+    color: white;
+}
+
+.edit-profile-btn:hover {
+    background-color: #1c2764;
+}
+
+.logout-btn {
+    background-color: #ff5722;
+    color: white;
+}
+
+.logout-btn:hover {
+    background-color: #e64a19;
+}

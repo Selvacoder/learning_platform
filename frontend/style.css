@@ -1,0 +1,676 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #e0f7fa, #ffffff); /* Gradient background for a modern look */
+    color: #333;
+    line-height: 1.6; /* Improved readability */
+}
+
+.navbar {
+    background-color: #283593; /* Dark blue navbar for a professional touch */
+    color: white;
+    padding: 1em 2em;
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    border-bottom: 2px solid #ff5722; /* Accent border for visual separation */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-toggle {
+    background-color: #ff5722; /* Eye-catching color */
+    color: white;
+    border: none;
+    padding: 0.5em;
+    border-radius: 50%; /* Round shape for profile button */
+    cursor: pointer;
+    margin-right: auto; /* Pushes the profile button to the left */
+    transition: background 0.3s, transform 0.3s; /* Smooth hover transition */
+}
+
+.profile-toggle:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.navbar-brand {
+    font-size: 1.8em; /* Larger brand text */
+    color: #ff5722; /* Brand color */
+    text-decoration: none;
+}
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-left: 20px; /* Add space between profile and search */
+}
+
+.navbar-search input {
+    padding: 0.5em;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.navbar-search input:focus {
+    outline: none; /* Remove outline on focus */
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5); /* Highlight input field */
+}
+
+.navbar-search button {
+    padding: 0.5em 1em;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s; /* Smooth hover transition */
+}
+
+.navbar-search button:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: text-decoration 0.2s; /* Smooth underline transition */
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+}
+
+/* Content Container */
+.content-container {
+    padding: 2em;
+    flex: 1;
+}
+
+.course-section {
+    margin-top: 2em;
+}
+
+.course-grid {
+    display: flex;
+    flex-direction: column; /* Change to column for vertical layout */
+    gap: 1.5em; /* More space between course cards */
+}
+
+.course-card {
+    display: flex; /* Use Flexbox for horizontal alignment */
+    justify-content: space-between; /* Space between info and image */
+    align-items: center; /* Align items vertically in the center */
+    background-color: #fff; /* White background for course cards */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Deeper shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth scale and shadow on hover */
+    margin-bottom: 20px; /* Space between cards */
+    padding: 20px;
+}
+
+.course-card:hover {
+    transform: translateY(-5px); /* Slightly lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+}
+
+.course-info {
+    flex: 1; /* Allow course info to take the remaining space */
+    padding-right: 20px; /* Add some space between the text and the image */
+}
+
+.course-card img {
+    width: 150px; /* Set the width for the image */
+    height: 100px; /* Set the height for the image */
+    object-fit: cover; /* Ensure the image maintains aspect ratio */
+    border-radius: 10px; /* Optional: Add border radius for rounded corners */
+}
+
+
+.course-info {
+    padding: 1.5em; /* More padding for a cleaner look */
+}
+
+.course-info h3 {
+    margin: 0 0 0.5em; /* Spacing below heading */
+    font-size: 1.5em; /* Larger font for course title */
+    color: #283593; /* Dark blue for titles */
+}
+
+.course-info p {
+    margin: 0 0 1em; /* Space below paragraph */
+}
+
+.course-info button {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 0.5em 1.5em; /* More padding for buttons */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s; /* Smooth hover transition */
+}
+
+.course-info button:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff; /* White sidebar for contrast */
+    padding: 1.5em; /* More padding for better layout */
+    border-right: 1px solid #ccc;
+    position: fixed;
+    left: -300px; /* Hide sidebar initially */
+    transition: left 0.3s ease;
+    height: 100%;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.sidebar.active {
+    left: 0; /* Show sidebar when active */
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    font-size: 1.5em; /* Larger sidebar title */
+    color: #283593; /* Dark blue for titles */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 1em 0; /* Space around list */
+}
+
+.sidebar li {
+    cursor: pointer;
+    padding: 0.5em 1em; /* Padding for list items */
+    border-radius: 4px; /* Rounded corners for better look */
+    transition: background 0.3s; /* Smooth background change */
+}
+
+.sidebar li:hover {
+    background-color: #f0f0f0; /* Light background on hover */
+}
+
+.close-sidebar {
+    background-color: #ff5722; /* Button to close sidebar */
+    color: white;
+    border: none;
+    padding: 0.5em;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 1em; /* Space above close button */
+    font-size: 1.5em; /* Larger close button */
+}
+/* Remove underline from links in the sidebar */
+.sidebar ul li a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Set link color */
+    font-size: 18px;
+}
+
+.sidebar ul li a:hover {
+    color: #007BFF; /* Change color on hover */
+}
+
+
+/* Login Styles */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 2em;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 1em;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.75em;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+button[type="submit"]:hover {
+    background-color: #e64a19;
+}
+
+.extra-links {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.extra-links a {
+    color: #ff5722;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* Signup Styles */
+.signup-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 2em;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 1em;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.75em;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+button[type="submit"]:hover {
+    background-color: #e64a19;
+}
+
+.extra-links {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.extra-links a {
+    color: #ff5722;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack navbar elements on smaller screens */
+        padding: 1em; /* Adjust padding */
+    }
+
+    .content-container {
+        padding: 1em; /* Adjust padding on smaller screens */
+    }
+
+    .course-grid {
+        gap: 1em; /* Reduce gap for smaller screens */
+    }
+
+    .course-card {
+        flex-direction: column; /* Stack course card elements vertically */
+    }
+
+    .sidebar {
+        width: 100%; /* Full width for sidebar on smaller screens */
+        left: -100%; /* Hide sidebar initially */
+    }
+
+    .sidebar.active {
+        left: 0; /* Show sidebar when active */
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 2em;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 1.5em;
+        color: #333;
+    }
+
+    .input-group {
+        margin-bottom: 1em;
+    }
+
+    .input-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+        color: #555;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 0.75em;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 0.75em;
+        background-color: #ff5722;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1em;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #e64a19;
+    }
+
+    .extra-links {
+        margin-top: 1em;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .extra-links a {
+        color: #ff5722;
+        text-decoration: none;
+        font-size: 0.9em;
+    }
+
+    .extra-links a:hover {
+        text-decoration: underline;
+    }
+}
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block; /* Ensures the error messages appear on new lines */
+    line-height: 1.5; /* Optional: Adds space between lines for better readability */
+}
+
+
+.signup-container .input-group {
+    margin-bottom: 15px;
+}
+
+.signup-container input[type="text"], 
+.signup-container input[type="email"], 
+.signup-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.signup-container button {
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.signup-container button:hover {
+    background-color: #e64a19;
+}
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    display: none; /* Initially hidden */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+
+/* Modal Header */
+.modal-content h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Modal Body */
+.modal-content p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Close Button */
+.close {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5em;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #f44336; /* Change color on hover */
+}
+
+/* General Modal Styles */
+/* General Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed in place */
+    z-index: 1000; /* On top of everything */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with opacity */
+    overflow: auto;
+    padding: 50px 0; /* Padding to center modal vertically */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin: 0 0 15px 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+p#course-name {
+    text-align: center;
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#confirm-enroll {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    text-align: center;
+}
+
+#confirm-enroll:hover {
+    background-color: #ff5722;
+    transform: scale(1.05);
+}
+
+#confirm-enroll:active {
+    transform: scale(0.98);
+}
+
+/* Close Button (X) */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.close:hover {
+    color: #ff5722;
+}
+
+/* Toast Message Styles */
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 25px;
+    z-index: 1001;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    font-size: 1.2em;
+    font-family: 'Arial', sans-serif;
+    display: none;
+    opacity: 1; /* Always visible */
+}
+
+/* Modal and Toast responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+
+    #confirm-enroll {
+        font-size: 1em; /* Slightly smaller font for mobile */
+    }
+
+    .toast {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
+
